@@ -1,0 +1,54 @@
+<?
+$aDescriptions = array(
+    "13.08.2011 pod Barczewem z Miłoszem",
+    "13.08.2011 pod Barczewem",
+    "13.08.2011 pod Barczewem",
+    "13.08.2011 pod Barczewem",
+    "13.08.2011 pod Barczewem",
+    "27.08.2011 w Starym Dworze z Miłoszem",
+    "27.08.2011 w Starym Dworze",
+    "27.08.2011 w Starym Dworze",
+    "27.08.2011 w Starym Dworze",
+    "A teraz czadu!",
+    "Ale sztywniak",
+    "Czy bez kolorow wyglądam równie dobrze",
+    "Dorotka jako wamp!",
+    "Gram na gitarze i się z tego cieszę!",
+    "Hej ho! Na szanty by się szło!",
+    "Jak zaczynałem na tym grać akordeon był większy ode mnie",
+    "Kochanka...gitarrrra! Miau!",
+    "Mikrofonie mój kochany",
+    "Przepraszam, ale nie skupiam się na strunach, bo patrzę w obiektyw",
+    "Skrzypce większe od Konika",
+    "Troje ich...jeszcze",
+    "Tu też troje ich",
+    "W kolorach mi do twarzy",
+    "Wedle porzekadła kto trzyma skrzypce nie odczuwa potrzeby łamania krzeseł",
+    "Wykadrowany tamburynem",
+    "Zdjęcie tzw. stomatologiczne"
+);
+?>
+
+<style>
+    div.gallery {
+
+    }
+
+    div.gallery a {
+        border: 1px solid white;
+        display: block;
+        margin: 10px auto;
+        width: 310px;
+    }
+    div.gallery a img {
+        border: 5px solid black;
+        width: 300px; 
+    }
+</style>
+<div class="gallery">
+    <? for ($a = 1; $a < 23; $a++): ?>
+        <a href="/gallery/img_0<?= $a < 10 ? "0" . $a : $a ?>.jpg" class="thickbox">
+            <img src="/gallery/img_0<?= $a < 10 ? "0" . $a : $a ?>.jpg" title="<?= $aDescriptions[$a] ?>"/>
+        </a>
+    <? endfor; ?>
+</div>

@@ -1,0 +1,54 @@
+<script><? ob_start(); ?>
+    $(function(){
+        $( 'div#ckeditor' )
+        .find( 'textarea.editor' )
+        .ckeditor({
+            filebrowserUploadUrl : '/admin/add-article-image',
+            language : 'pl',
+            toolbar :
+                [
+                { name: 'clipboard', items : [ 'Source','Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
+                { name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','Scayt' ] },
+                { name: 'insert', items : [ 'Image','Table','HorizontalRule','SpecialChar',] },
+                '/',
+                { name: 'styles', items : [  'Styles','Format' ] },
+                { name: 'basicstyles', items : [ 'Bold','Italic','Strike','-','RemoveFormat','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] },
+                { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote' ] },
+                { name: 'links', items : [ 'Link','Unlink','Anchor' ] },
+                { name: 'tools', items : [ 'Maximize'] }
+            ]
+        })
+        .end()
+        .find( 'a' )
+        .addClass( 'mylink' )
+        .end();
+    });
+<? $this->headScript()->appendScript(ob_get_clean()); ?>
+</script>
+
+<div id="ckeditor">
+    <? if ($this->id != null): ?>
+        <form action="/admin/save-article" method="POST">
+            <? $oArticle = $this->articles->findById($this->id); ?>
+            <input type="hidden" name="id" value="<?= $this->id ?>" />
+            <textarea name="content" class="editor"><?= $oArticle->getContent(); ?></textarea>
+
+            <br />
+
+            <input type="submit" value="Zapisz" />
+        </form>
+    <? else: ?>
+        <h1>Wybierz artykuł, w którym chcesz wprowadzić zmiany</h1>
+
+        <form action="/admin" method="POST">
+            <select name="id">
+                <? foreach ($this->articles as $oArticle): ?>
+                    <? if (!$oArticle->isLocked()): ?>
+                        <option value="<?= $oArticle->getId(); ?>"><?= $oArticle->getTitle(); ?></option>
+                    <? endif; ?>
+                <? endforeach; ?>
+            </select>
+            <input type="submit" value="Wybierz" />
+        </form>
+    <? endif; ?>
+</div>

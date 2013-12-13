@@ -1,0 +1,59 @@
+<? $this->headScript()->appendFile('/js/ckeditor/ckeditor.js'); ?>
+<? $this->headScript()->appendFile('/js/ckeditor/adapters/jquery.js'); ?>
+
+<script>
+<? ob_start(); ?>
+    $(function(){
+        $( 'div#ckeditor' )
+        .find( 'textarea.editor' )
+        .ckeditor({
+            filebrowserUploadUrl : '/admin/index/add-article-image',
+            language : 'pl',
+            toolbar :
+                [
+                { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
+                { name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','Scayt' ] },
+                { name: 'insert', items : [ 'Image','Table','HorizontalRule','SpecialChar',] },
+                '/',
+                { name: 'styles', items : [ 'Styles','Format' ] },
+                { name: 'basicstyles', items : [ 'Bold','Italic','Strike','-','RemoveFormat','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] },
+                { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote' ] },
+                { name: 'links', items : [ 'Link','Unlink','Anchor' ] },
+                { name: 'tools', items : [ 'Maximize'] }
+            ]
+        })
+        .end()
+        .find( 'a' )
+        .addClass( 'mylink' )
+        .end();
+    });
+
+<? $this->headScript()->appendScript(ob_get_flush()); ?>
+</script>
+
+<div id="ckeditor">
+    <form action="/admin/index/save-article" method="POST">
+        <input type="hidden" name="id" value="<?= $this->article["id"] ?>" />
+        <input type="hidden" name="created_date" value="<?= $this->article["created_date"] ?>" />
+        <? if (count($this->aAvailableLanguages->toArray()) > 1): ?>
+            <label>Język: </label>
+            <select name="language" onChange="window.location = '/admin/index/edit-article/id/<?= $this->id ?>/language/'+this.value">
+                <? foreach ($this->aAvailableLanguages as $sCode => $sLanguage): ?>
+                    <option value="<?= $sCode; ?>"<?= $sCode == $this->sCurrentLanguage ? " SELECTED" : "" ?>><?= $sLanguage; ?></option>
+                <? endforeach; ?>
+            </select>
+        <? endif; ?>
+
+        <label>Tytuł:</label>
+        <input value="<?= $this->article["title"] ?>" name="title" />
+
+        <label>Data:</label>
+        <input name="modification_date" type="date" value="<?= date("d.m.Y", strtotime(!is_array($this->article) ? "now" : $this->article["modification_date"] ? $this->article["modification_date"] : $this->article["created_date"])); ?>" />
+
+        <textarea name="content" class="editor">
+            <?= $this->article["content"] ?>
+        </textarea>
+
+        <input type="submit" value="Zapisz" />
+    </form>
+</div>

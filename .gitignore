@@ -1,0 +1,7 @@
+awstats/
+docs/
+logs/
+nbproject/
+stats/
+data/cache/
+public_html/audio/

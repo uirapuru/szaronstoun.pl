@@ -1,0 +1,36 @@
+<script src="js/jwplayer/jwplayer.js" type="text/javascript"></script>
+
+<?
+$audio = array(
+    "Moje jedyne marzenie.mp3"          => '/audio/01.mp3',
+    "Jedzie pociąg z daleka.mp3"        => '/audio/02.mp3',
+    "Hej, rock and roll.mp3"            => '/audio/03.mp3',
+    "La bamba.mp3"                      => '/audio/04.mp3',
+    "Sway.mp3"                          => '/audio/05.mp3',
+    "Cyganeczka Janeczka.mp3"           => '/audio/06.mp3',
+    "I had the time of my life.mp3"     => '/audio/07.mp3',
+    "Kryzysowa narzeczona.mp3"          => '/audio/08.mp3',
+    "Kobiety są gorące.mp3"             => '/audio/09.mp3',
+//    "Autostop.mp3"                      => '/audio/10.mp3',
+    "Don\'t know why.mp3"               => '/audio/11.mp3',
+    "Desafinado.mp3"                    => '/audio/12.mp3'
+);
+
+$iKey = 0;
+?>
+
+<ol>
+    <? foreach ($audio as $title => $mp3): ?>	
+        <li><?= $title ?> (<a href="<?= $mp3 ?>">pobierz</a>)
+            <div id="audio<?= $iKey; ?>"></div>
+            <script type="text/javascript">
+                jwplayer("audio<?= $iKey++; ?>").setup({
+                    'flashplayer': "/js/jwplayer/player.swf",
+                    'file': "<?= $mp3 ?>",
+                    'height': 24,
+                    'width' : 400,
+                    'controlbar' : 'bottom' 
+                });
+            </script></li>
+    <? endforeach; ?>
+</ol>
